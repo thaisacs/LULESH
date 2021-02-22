@@ -161,6 +161,13 @@ Additional BSD Notice
 
 #include "lulesh.h"
 
+extern "C" {
+  void init_timestep_();
+  void begin_timestep_();
+  void end_timestep_();
+  void exit_timestep_();
+}
+
 /* Work Routines */
 
 static inline
@@ -2654,6 +2661,8 @@ int main(int argc, char *argv[])
    int myRank ;
    struct cmdLineOpts opts;
 
+   init_timestep_();
+
 #if USE_MPI   
    Domain_member fieldData ;
    
@@ -2743,6 +2752,7 @@ int main(int argc, char *argv[])
 //   for(Int_t i = 0; i < locDom->numReg(); i++)
 //      std::cout << "region" << i + 1<< "size" << locDom->regElemSize(i) <<std::endl;
    while((locDom->time() < locDom->stoptime()) && (locDom->cycle() < opts.its)) {
+      begin_timestep_();
 
       TimeIncrement(*locDom) ;
       LagrangeLeapFrog(*locDom) ;
@@ -2754,6 +2764,7 @@ int main(int argc, char *argv[])
                    << "dt="     << double(locDom->deltatime()) << "\n";
          std::cout.unsetf(std::ios_base::floatfield);
       }
+      end_timestep_();
    }
 
    // Use reduced max elapsed time
@@ -2784,6 +2795,7 @@ int main(int argc, char *argv[])
 
    delete locDom; 
 
+   exit_timestep_();
 #if USE_MPI
    MPI_Finalize() ;
 #endif
