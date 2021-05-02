@@ -52,4 +52,4 @@ set(LULESH_SOURCES
 set(LULESH_EXEC lulesh2.0)
 
 add_executable(${LULESH_EXEC} ${LULESH_SOURCES})
-target_link_libraries(${LULESH_EXEC} ${LULESH_EXTERNAL_LIBS} ../../utils/kernel_stats.o)
+target_link_libraries(${LULESH_EXEC} ${LULESH_EXTERNAL_LIBS} ../../utils/obj/*.o)

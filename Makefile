@@ -52,7 +52,7 @@ all: $(LULESH_EXEC)
 
 $(LULESH_EXEC): $(OBJECTS2.0)
 	@echo "Linking"
-	$(CXX) $(OBJECTS2.0) $(LDFLAGS) -lm -o $@ ../../utils/kernel_stats.o
+	$(CXX) $(OBJECTS2.0) $(LDFLAGS) -lm -o $@ ../../utils/obj/*.o
 
 clean:
 	/bin/rm -f *.o *~ $(OBJECTS) $(LULESH_EXEC)
